@@ -101,7 +101,7 @@ class DANN(nn.Module):
         x = torch.flatten(x, 1)
         
         if alpha is not None:
-            x = ReverseLayerF.apply(x, alpha)
+            x = ReverseLayer.apply(x, alpha)
             x = self.gd(x)
         else:
             x = self.gy(x)
