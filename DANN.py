@@ -87,9 +87,9 @@ class DANN(nn.Module):
         
         if alpha is not None:
             x = ReverseLayer.apply(x, alpha)
-            x = self.classifier(x)
-        else:
             x = self.discriminator(x)
+        else:
+            x = self.classifier(x)
             
         return x
 
