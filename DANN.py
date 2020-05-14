@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.autograd import Function
+from copy import deepcopy
 
 try:
     from torch.hub import load_state_dict_from_url
@@ -34,7 +35,7 @@ class DANN(nn.Module):
         self.gf = alexnet_model.features
         self.avgpool = alexnet_model.avgpool
         self.gy = alexnet_model.classifier
-        self.gd = alexnet_model.classifier
+        self.gd = deepcopy(alexnet_model.classifier)
         
         self.gy[6] = nn.Linear(4096, num_classes)
         self.gd[6] = nn.Linear(4096, 2)
@@ -58,6 +59,4 @@ class DANN(nn.Module):
     
 def dann(pretrained = False, **kwargs):
     
-    model = DANN(pretrained = pretrained, **kwargs)
-        
-    return model
+    return DANN(pretrained = pretrained, **kwargs)
