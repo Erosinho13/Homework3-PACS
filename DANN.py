@@ -102,9 +102,10 @@ def dann(pretrained = False, progress = True, num_classes = 7, **kwargs):
     if pretrained:
         state_dict = load_state_dict_from_url(model_urls['alexnet'], progress = progress)
         model.load_state_dict(state_dict, strict = False)
-        model.discriminator = deepcopy(model.classifier)
-    
-        model.classifier[6] = nn.Linear(4096, num_classes)
-        model.discriminator[6] = nn.Linear(4096, 2)
+        
+    model.discriminator = deepcopy(model.classifier)
+
+    model.classifier[6] = nn.Linear(4096, num_classes)
+    model.discriminator[6] = nn.Linear(4096, 2)
         
     return model
